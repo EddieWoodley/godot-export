@@ -45816,9 +45816,8 @@ const encode = (obj, opt = {}) => {
   opt.newline = opt.newline === true
   opt.sort = opt.sort === true
   opt.whitespace = opt.whitespace === true || opt.align === true
-  // The `typeof` check is required because accessing the `process` directly fails on browsers.
   /* istanbul ignore next */
-  opt.platform = opt.platform || (typeof process !== 'undefined' && process.platform)
+  opt.platform = opt.platform || process?.platform
   opt.bracketedArray = opt.bracketedArray !== false
 
   /* istanbul ignore next */
@@ -45981,8 +45980,8 @@ const decode = (str, opt = {}) => {
   const remove = []
   for (const k of Object.keys(out)) {
     if (!hasOwnProperty.call(out, k) ||
-      typeof out[k] !== 'object' ||
-      Array.isArray(out[k])) {
+        typeof out[k] !== 'object' ||
+        Array.isArray(out[k])) {
       continue
     }
 
@@ -59716,11 +59715,15 @@ async function prepareTemplates4() {
         core.info(`✅ Found templates for Godot ${godotVersion} at ${godotVersionTemplatesPath}.`);
         return;
     }
-    // just unzipping straight to the target directoryu
+    // just unzipping straight to the target directory
     await io.mkdirP(godotVersionTemplatesPath);
     // -j to ignore the directory structure in the zip file
     // 4.1 templates are in a subdirectory, so we need to ignore that
     await (0,exec.exec)('unzip', ['-o', '-j', templateFile, '-d', godotVersionTemplatesPath]);
+    // Unzip Android build source to project directory
+    core.info(`⬇️ Extracting android build source for ${godotVersion}...`);
+    await io.mkdirP('./android/build');
+    await (0,exec.exec)('unzip', ['-o', `${godotVersionTemplatesPath}/android_source.zip`, '-d', './android/build']);
 }
 /**
  * Extracts the Godot version from the executable. The version is a bit inconsistent, so pulling it from the executable is the most reliable way.

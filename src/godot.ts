@@ -206,7 +206,6 @@ async function prepareTemplates3(): Promise<void> {
 }
 
 async function prepareTemplates4(): Promise<void> {
-  core.info(`⬇️ Preparing templates for ${godotVersion}...`);
   const templateFile = path.join(GODOT_WORKING_PATH, GODOT_TEMPLATES_FILENAME);
   const godotVersion = await getGodotVersion();
   const godotVersionTemplatesPath = path.join(GODOT_EXPORT_TEMPLATES_PATH, godotVersion);
@@ -224,11 +223,11 @@ async function prepareTemplates4(): Promise<void> {
   // -j to ignore the directory structure in the zip file
   // 4.1 templates are in a subdirectory, so we need to ignore that
   await exec('unzip', ['-o', '-j', templateFile, '-d', godotVersionTemplatesPath]);
-  
+
   // Unzip Android build source to project directory
   core.info(`⬇️ Extracting android build source for ${godotVersion}...`);
-  await io.mkdirP("./android/build");
-  await exec('unzip', ['-o', godotVersionTemplatesPath + '/android_source.zip', '-d', "./android/build"]);
+  await io.mkdirP('./android/build');
+  await exec('unzip', ['-o', `${godotVersionTemplatesPath}/android_source.zip`, '-d', './android/build']);
 }
 
 /**
