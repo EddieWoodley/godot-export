@@ -206,6 +206,7 @@ async function prepareTemplates3(): Promise<void> {
 }
 
 async function prepareTemplates4(): Promise<void> {
+  core.info(`⬇️ Preparing templates for ${godotVersion}...`);
   const templateFile = path.join(GODOT_WORKING_PATH, GODOT_TEMPLATES_FILENAME);
   const godotVersion = await getGodotVersion();
   const godotVersionTemplatesPath = path.join(GODOT_EXPORT_TEMPLATES_PATH, godotVersion);
