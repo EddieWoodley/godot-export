@@ -228,6 +228,7 @@ async function prepareTemplates4(): Promise<void> {
   core.info(`⬇️ Extracting android build source for ${godotVersion}...`);
   await io.mkdirP('./android/build');
   await exec('unzip', ['-o', `${godotVersionTemplatesPath}/android_source.zip`, '-d', './android/build']);
+  fs.writeFileSync('./android/.build_version', godotVersion);
 }
 
 /**

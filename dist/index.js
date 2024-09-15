@@ -59724,6 +59724,7 @@ async function prepareTemplates4() {
     core.info(`⬇️ Extracting android build source for ${godotVersion}...`);
     await io.mkdirP('./android/build');
     await (0,exec.exec)('unzip', ['-o', `${godotVersionTemplatesPath}/android_source.zip`, '-d', './android/build']);
+    external_fs_.writeFileSync('./android/.build_version', godotVersion);
 }
 /**
  * Extracts the Godot version from the executable. The version is a bit inconsistent, so pulling it from the executable is the most reliable way.
