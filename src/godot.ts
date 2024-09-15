@@ -218,11 +218,15 @@ async function prepareTemplates4(): Promise<void> {
     return;
   }
 
-  // just unzipping straight to the target directoryu
+  // just unzipping straight to the target directory
   await io.mkdirP(godotVersionTemplatesPath);
   // -j to ignore the directory structure in the zip file
   // 4.1 templates are in a subdirectory, so we need to ignore that
   await exec('unzip', ['-o', '-j', templateFile, '-d', godotVersionTemplatesPath]);
+  
+  // Unzip Android build source to project directory
+  await io.mkdirP("./android");
+  await exec('unzip', ['-o', godotVersionTemplatesPath + '/android_source.zip', '-d', "./android"]);
 }
 
 /**
