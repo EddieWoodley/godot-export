@@ -225,6 +225,7 @@ async function prepareTemplates4(): Promise<void> {
   await exec('unzip', ['-o', '-j', templateFile, '-d', godotVersionTemplatesPath]);
   
   // Unzip Android build source to project directory
+  core.info(`⬇️ Extracting android build source for ${godotVersion}...`);
   await io.mkdirP("./android/build");
   await exec('unzip', ['-o', godotVersionTemplatesPath + '/android_source.zip', '-d', "./android/build"]);
 }
